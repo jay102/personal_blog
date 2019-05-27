@@ -1,0 +1,23 @@
+
+
+#profile-img {
+    height:180px;
+}
+.text-center {
+    text-align: center !important;
+    margin: 0 auto;
+    
+}
+.flex-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.background{
+    background-image: url('https://i.imgur.com/xhiRfL6.jpg');
+    height: 100vh
+}
+.size{
+    width:100%;
+}
