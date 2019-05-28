@@ -1,4 +1,4 @@
-# custom_blog_panel
+# custom blog panel
 A custom blog panel which powers the Blog on my personal react website. 
 Developed with a TypeScript/JavaScript backend and a React Admin Dashboard.
 
