@@ -12,3 +12,4 @@ It has minimal features such as
 -Delete Comments
 
 More features would be added depending on the amount of time i've got
+[https://jaycodes.com/images/portfolio/blog.PNG]
