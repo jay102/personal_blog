@@ -407,3 +407,8 @@ footer .copyright {
   font-size: 16px;
   padding: 25px 35px;
 }
+.mybutton{
+  background-color: #0085A1;
+  color: #e9ecef;
+  border-radius: 5px;
+}

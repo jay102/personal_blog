@@ -1,0 +1,19 @@
+{
+    "Main": {
+        "header": "James's blog",
+        "subtitle": "Welcome to my blog",
+        "bg": "img/background.jpg"
+    },
+    "About": {
+        "header": "About Me",
+        "subtitle": "Wanna know some about me? Here you go.!",
+        "text": "",
+        "bg": "img/about-bg.jpg"
+    },
+    "Contact": {
+        "header": "Contact Me",
+        "subtitle": "Have questions? I have answers.!",
+        "text": "Want to get in touch? Fill out the form below to send me a message and I will get back to you as soon as possible!",
+        "bg": "img/contact-bg.jpg"
+    }
+}

@@ -4,6 +4,7 @@ import "easymde/dist/easymde.min.css";
 import axios from 'axios'
 import slugify from '@sindresorhus/slugify'
 import moment from 'moment'
+import uuid from 'uuidv4'
 
 class NewPost extends Component {
     state = {
@@ -33,7 +34,8 @@ class NewPost extends Component {
         })
 
     }
-    makeRequest = () => {
+    makeRequest = e => {
+        e.preventDefault()
         const time = moment().format("llll");
         let postData = {
             post_url: "http://localhost:3000/posts/" + slugify(this.state.url),
@@ -42,25 +44,25 @@ class NewPost extends Component {
             time: time,
             author: "Admin"
         }
-        axios.post('http://localhost:4000/admin/post', postData)
+        axios.post('/posts/new-post', postData)
             .then(res => {
                 //successful post
                 console.log(res.data)
-                this.setState(prevState =>
-                    ({
+                this.setState(
+                    {
                         postContent: "",
                         url: "",
                         postTitle: "",
-                        success: !prevState
-                    })
+                        success: !this.state.success
+                    }
                 )
             })
             .catch(err => {
                 if (err.response) {
                     console.log(err.response)
-                    this.setState(prevState => ({
-                        error: !prevState
-                    }))
+                    this.setState({
+                        error: !this.state.error
+                    })
                 }
             });
     }
@@ -72,8 +74,7 @@ class NewPost extends Component {
             <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-4">
                 <div className="col-md-8 col-md-offset-2">
                     <ResponseChecker data={this.state} />
-                    <form method="POST">
-
+                    <form>
                         <div className="form-group has-error">
                             <label htmlFor="slug">Slug <span className="require">*</span> <small>(This field use in url path.)</small></label>
                             <div className="input-group mb-3">
@@ -100,6 +101,7 @@ class NewPost extends Component {
                                         spellChecker: true,
                                         autosave: {
                                             enabled: true,
+                                            uniqueId: uuid(),
                                             delay
                                         },
                                     }
@@ -112,9 +114,10 @@ class NewPost extends Component {
                         </div>
 
                         <div className="form-group">
-                            <button type="submit" onClick={this.makeRequest} className="btn btn-primary">
+                            <button type="submit" onClick={this.makeRequest} className="btn btn-primary" style={{ marginBottom: "10px" }}>
                                 Submit
     		        </button>
+                            <ResponseChecker {...this.state} />
                         </div>
 
                     </form>
@@ -136,7 +139,7 @@ let ResponseChecker = (props) => {
     } else if (success) {
         return (
             <div class="alert alert-success" role="alert">
-                success
+                Post added!
 </div>
         );
     } else {

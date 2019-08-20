@@ -7,6 +7,7 @@ const port = process.env.PORT || 4000
 
 //import routes
 import Admin from './routes/admin'
+import BlogPosts from './routes/blogpost'
 
 
 
@@ -31,6 +32,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 //setup routes
 app.use('/admin', Admin);
+app.use('/posts', BlogPosts)
 
 //test db
 db.authenticate()

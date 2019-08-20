@@ -24,10 +24,12 @@ class AdminLogin extends Component {
         const { history } = this.props
         const data = { password: this.state.password }
 
-        axios.post('http://localhost:4000/admin/login', data).then(response => {
+        axios.post('/admin/login', data).then(response => {
+            console.log(response)
             //successful login
             this.setState({ password: "" })
             history.push('/admin/dashboard')
+            localStorage.setItem('user_id', response.data.user_id);
         }).catch(error => {
             if (error.response) {
                 console.log(error.response)
@@ -43,7 +45,7 @@ class AdminLogin extends Component {
                     <div>
                         <form type="submit" onSubmit={this.handleSubmit}>
                             <input className="size" autoComplete="current-password" type="password" onChange={this.handleChange} value={this.state.password} required autoFocus />
-                            <button className="btn btn-lg btn-primary btn-block size">Login</button>
+                            <button className="btn btn-primary btn-block size">Login</button>
                         </form>
                     </div>
                 </div>

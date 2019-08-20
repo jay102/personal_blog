@@ -1,7 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express'
 const router = express.Router();
 import Admin from '../../database/models/Admin'
-import postController from '../controllers/postController'
 const bcrypt = require('bcryptjs');
 const salt = bcrypt.genSaltSync(10);
 
@@ -23,7 +22,7 @@ router.post('/login', (req: Request, res: Response, next: NextFunction) => {
             if (!response) {
                 res.status(404).json({ error: "Incorrect password." });
             } else {
-                res.status(200).json({ message: "success." });
+                res.status(200).json({ message: "success.", user_id: user.id });
             }
         });
     }).catch((err: any) => res.status(401).json({ error: err }));
@@ -47,8 +46,7 @@ router.post('/:password', (req: Request, res: Response, next: NextFunction) => {
     });
 })
 
-//Create Blogpost
-router.post('/new-post', postController)
+
 
 
 
