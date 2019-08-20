@@ -1,16 +1,8 @@
-orbs:
-  react: "thefrontside/react@dev:alpha"
-version: 2.1
-workflows:
-  push:
-    jobs:
-      - react/install
-      - react/eslint:
-          requires:
-            - react/install
-      - react/test:
-          requires:
-            - react/install
-      - react/coverage:
-          requires:
-            - react/install
+ version: 2
+ jobs:
+   build:
+     docker:
+       - image: circleci/ruby:2.4.1
+     steps:
+       - checkout
+       - run: echo "A first hello"
