@@ -1,53 +1,17 @@
 import express, { Request, Response, NextFunction } from 'express'
-const router = express.Router();
+import AdminController from '../controllers/adminController'
 import Admin from '../../database/models/Admin'
-const bcrypt = require('bcryptjs');
-const salt = bcrypt.genSaltSync(10);
 
+const AdminRoutes = () => {
+    const router = express.Router();
+    const adminController = new AdminController(Admin);
+    // login route
+    router.route('/login')
+        .post(adminController.login)
 
-//Login route
-router.post('/login', (req: Request, res: Response, next: NextFunction) => {
-    let password: String = req.body.password;
-    let id: any = 1;
-
-    Admin.findOne({
-        where: {
-            id: id
-        }
-    }).then((user: any) => {
-        if (!user) {
-            res.status(404).json({ error: "Incorrect id." });
-        }
-        bcrypt.compare(password, user.password, function (err: any, response: any) {
-            if (!response) {
-                res.status(404).json({ error: "Incorrect password." });
-            } else {
-                res.status(200).json({ message: "success.", user_id: user.id });
-            }
-        });
-    }).catch((err: any) => res.status(401).json({ error: err }));
-})
-
-//Post Password to Db
-router.post('/:password', (req: Request, res: Response, next: NextFunction) => {
-    let password: String = req.params.password;
-    let hash: String = bcrypt.hashSync(password, salt);
-    Admin.create({
-        password: hash
-    }).then((response: String) => {
-        res.status(200).json({
-            message: "Admin password added",
-            response: response
-        })
-    }).catch((err: String) => {
-        res.status(401).json({
-            error: err
-        })
-    });
-})
-
-
-
-
-
-export default router;
+    // post password to db route
+    router.route('/:password')
+        .post(adminController.postPassword)
+    return router;
+}
+export default AdminRoutes;

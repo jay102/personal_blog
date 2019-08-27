@@ -8,7 +8,7 @@ const AboutContainer = () => {
                 let style = {
                     backgroundImage: "url(" + value.About.bg + ")"
                 }
-                return <AboutView Title={value.About.header} subTitle={value.About.subtitle} bg={style} />
+                return <AboutView Title={value.About.header} subTitle={value.About.subtitle} bg={style} text={value.About.text} />
             }}
         </TemplateFiles.Consumer>
     );

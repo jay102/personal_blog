@@ -39,7 +39,7 @@ class Content extends Component {
         const recentPosts = this.state.posts.map(posts => {
             return (
                 <tbody key={posts.id}>
-                    <tr scope="row">
+                    <tr>
                         <td>{posts.id}</td>
                         <td>{posts.title}</td>
                         <td>{posts.author}</td>

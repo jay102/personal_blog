@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
-import $ from 'jquery';
 import Header from './components/Frontend/Header/Header'
+import SinglePostView from './components/Frontend/SinglePost/SinglePostContainer'
 import Articles from './components/Frontend/Articles/ArticlesContainer'
 import Footer from './components/Frontend/Footer/Footer'
+import NotFound from './components/Frontend/404/NotFound'
 import '../src/assets/css/clean-blog.css'
-import Files from './assets/TemplateFiles'
+import FrontendFiles from './assets/TemplateFiles'
 import About from './components/Frontend/About/AboutContainer'
 import Contact from './components/Frontend/Contact/ContactContainer'
 import AdminLogin from './components/Admin/auth/AdminLogin'
-import Dashboard from './components/Admin/Dashboard/Dashboard'
+import Dashboard from './components/Admin/Dashboard/Layout/Dash/Dashboard'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import axios from 'axios'
+import { useState } from 'react'
 export const TemplateFiles = React.createContext();
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      siteData: Files
+      siteData: FrontendFiles
     }
   }
 
@@ -27,9 +30,9 @@ class App extends Component {
       <TemplateFiles.Provider value={this.state.siteData}>
         <Router>
           <Switch>
+            <Route exact strict path="/admin/login" component={AdminLogin} />
+            <Route path="/admin/dashboard" render={(props) => <Dashboard />} />
             <Route path="/" component={Frontend} />
-            <Route path="/admin/login" component={AdminLogin} exact />
-            <Route path="/admin/dashboard" component={Dashboard} />
           </Switch>
         </Router>
       </TemplateFiles.Provider>
@@ -38,13 +41,21 @@ class App extends Component {
 }
 
 const Frontend = () => {
+  const [article, populateArticle] = useState('');
+  // set article
+  let setArticle = (article) => {
+    populateArticle(article)
+    console.log(article)
+  };
   return (
     <Router>
       <Header />
       <Switch>
-        <Route exact path="/" component={Articles} />
+        <Route exact strict path="/" component={Articles} article={setArticle} />
         <Route exact path="/about" component={About} />
         <Route exact path="/contact" component={Contact} />
+        <Route exact strict path={`${article.post_url}`} render={(props) => <SinglePostView data={article} />} />
+        <Route path="" component={NotFound} />
       </Switch>
       <Footer />
     </Router>

@@ -16,7 +16,6 @@ class AdminLogin extends Component {
 
     handleSubmit = e => {
         e.preventDefault()
-        console.log(this.state.password)
         this.makeRequest()
     }
 
@@ -25,11 +24,11 @@ class AdminLogin extends Component {
         const data = { password: this.state.password }
 
         axios.post('/admin/login', data).then(response => {
-            console.log(response)
+            //console.log(response)
             //successful login
+            localStorage.setItem('user_id', response.data.user_id);
             this.setState({ password: "" })
             history.push('/admin/dashboard')
-            localStorage.setItem('user_id', response.data.user_id);
         }).catch(error => {
             if (error.response) {
                 console.log(error.response)

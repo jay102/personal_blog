@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Header from './header'
-import Footer from './footer'
-import SideBar from './sidebar'
-import '../../../assets/css/dashboard_css.css'
+import Header from '../NavBar/header'
+import Footer from '../Footer/footer'
+import SideBar from '../SideBar/sidebar'
+import './dashboard_css.css'
 
 
 //import body contents from views
-import AllPosts from './views/AllPosts'
-import NewPost from './views/NewPost'
-import DashboardBody from './views/content'
+import DashboardBody from '../../Pages/Main/content'
+import NewPost from '../../Pages/NewPost/NewPostContainer'
+import AllPosts from '../../Pages/AllPosts/AllPostContainer'
 
 class Dashboard extends Component {
     constructor(props) {
@@ -21,18 +21,18 @@ class Dashboard extends Component {
         return (
             <Router>
                 <div className="container-fluid custom">
-
                     <Header />
                     <SideBar />
                     <div className="container-fluid" id="content-wrap">
                         <main role="main" className="col">
-                            <Route exact strict path="/admin/dashboard" component={DashboardBody} />
-                            <Route exact strict path="/admin/dashboard/new-post" component={NewPost} />
-                            <Route exact strict path="/admin/dashboard/all-posts" component={AllPosts} />
+                            <Switch>
+                                <Route exact strict path="/admin/dashboard" component={DashboardBody} />
+                                <Route exact strict path="/admin/dashboard/new-post" component={NewPost} />
+                                <Route exact strict path="/admin/dashboard/all-posts" component={AllPosts} />
+                            </Switch>
                         </main>
                     </div>
                     <Footer />
-
                 </div>
             </Router>
         );

@@ -1,22 +1,33 @@
-import { newpost, getAllposts, getLimitedPosts, getPostById, getPostNo } from './../controllers/postController';
+import PostController from '../controllers/postController';
+import BlogPost from '../../database/models/Posts'
 import express from 'express'
 
-const router = express.Router();
 
+const blogPostRouter = () => {
+  const router = express.Router();
+  let controller = new PostController(BlogPost);
 
-//Create Blogpost
-router.post('/new-post', newpost)
+  //Create Blogpost
+  router.route('/new-post')
+    .post(controller.newPost)
 
-//get all blogposts
-router.get('/', getAllposts)
+  // get all blogposts
+  router.route('/')
+    .get(controller.getAllposts)
 
-//get limited blogposts for dashboard
-router.get('/limit', getLimitedPosts)
+  // get limited blogposts for dashboard
+  router.route('/limit')
+    .get(controller.getLimitedPosts)
 
-//get number of postss
-router.get('/posts-count', getPostNo)
+  // get posts count
+  router.route('/posts-count')
+    .get(controller.getPostNo)
 
-//get blogpost by id
-router.get('/:postid', getPostById)
-
-export default router;
+  // get blogpost by id
+  router.route('/:postid')
+    .get(controller.getPostById)
+    .delete(controller.deletePost)
+    .put(controller.editPost)
+  return router;
+};
+export default blogPostRouter;

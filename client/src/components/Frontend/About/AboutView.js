@@ -11,13 +11,15 @@ const AboutView = (props) => {
             <div className="col-lg-8 col-md-10 mx-auto">
               <div className="site-heading">
                 <h1>{props.Title}</h1>
-                <span className="subheading">{props.subTitle}</span>
+                <span className="subheading subheading__about">{props.subTitle}</span>
               </div>
             </div>
           </div>
         </div>
       </header>
-      <div>About</div>
+      <div className="container">
+        <div className="wrapper"><p>{props.text}</p></div></div>
+
     </React.Fragment>
   );
 }

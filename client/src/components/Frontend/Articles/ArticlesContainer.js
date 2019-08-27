@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { TemplateFiles } from '../../../App'
 import ArticleView from './ArticleView'
+import Article from './Article'
 import axios from 'axios'
 
 class Articles extends Component {
@@ -28,23 +29,15 @@ class Articles extends Component {
                 }
             })
     }
+    clickedPost = (e, article) => {
+        e.preventDefault()
+        console.log('clicked')
+        this.props.article(article);
+    }
     render() {
         const Posts = this.state.articles.map(articles => {
-            const { id, title, author, post_url, time, body } = articles;
             return (
-                <ul key={id}>
-                    <li style={{ listStyle: "none" }}>
-                        <div className="post-preview">
-                            <a href={post_url}>
-                                <h2 className="post-title">
-                                    {title}</h2>
-                                <h3 className="post-subtitle">
-                                    {body.split(" ", 30)} </h3>
-                            </a>
-                            <p className="post-meta">Posted by <a>{author}</a>{` on ${time}`}</p>
-                        </div>
-                    </li>
-                </ul>
+                <Article {...articles} key={articles.id} clicked={this.clickedPost} />
             );
         })
         return (

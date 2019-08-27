@@ -1,4 +1,5 @@
 import React from 'react';
+import DarkNav from '../CategoriesNav/DarkNav'
 
 const ArticleView = (props) => {
   return (
@@ -15,12 +16,12 @@ const ArticleView = (props) => {
             </div>
           </div>
         </div>
+        <DarkNav />
       </header>
       <div className="container">
         <div className="row">
           <div className="col-lg-8 col-md-10 mx-auto">
             {props.Posts}
-
             <div className="clearfix">
               <button className="btn btn-primary float-right" href="#">Older Posts &rarr;</button>
             </div>
