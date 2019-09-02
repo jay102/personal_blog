@@ -8,6 +8,10 @@ const AdminRoutes = () => {
     const { multerInit } = multerSetup(multer);
     const router = express.Router();
     const adminController = new AdminController(Admin);
+    // find admin
+    router.route('/:id')
+        .get(adminController.details)
+
     // login route
     router.route('/login')
         .post(adminController.login)

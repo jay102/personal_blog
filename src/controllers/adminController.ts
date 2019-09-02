@@ -7,6 +7,21 @@ class AdminController {
   constructor(Admin: any) {
     this.Admin = Admin;
   }
+  // get admin
+  details = (req: Request, res: Response, next: NextFunction) => {
+    this.Admin.findOne({
+      where:
+        { id: req.params.id },
+      attributes: ['image']
+    })
+      .then((response: any) => {
+        res.status(201).json({ admin: response })
+      })
+      .catch((err: any) => {
+        res.json({ err: err })
+      })
+  }
+
   // login
   login = (req: Request, res: Response, next: NextFunction) => {
     let password: String = req.body.password;

@@ -10,7 +10,6 @@ class Header extends Component {
 
     render() {
         const user_id = localStorage.getItem('user_id');
-        console.log(user_id)
         return (
             <nav className="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
                 <div className="container">

@@ -29,18 +29,23 @@ class Articles extends Component {
                 }
             })
     }
+
     render() {
         const Posts = this.state.articles.map(articles => {
             return (
-                <Article {...articles} key={articles.id} clicked={this.clickedPost} />
+                <TemplateFiles.Consumer>
+                    {data => (
+                        <Article {...articles} key={articles.id} clicked={this.clickedPost} admin={data.admin} />
+                    )}
+                </TemplateFiles.Consumer>
             );
         })
         return (
             <TemplateFiles.Consumer>
                 {value => (
                     <ArticleView Posts={Posts} mystyle={{
-                        backgroundImage: "url(" + value.Main.bg + ")"
-                    }} data={value.Main} />)}
+                        backgroundImage: "url(" + value.siteData.Main.bg + ")"
+                    }} data={value.siteData.Main} />)}
             </TemplateFiles.Consumer>
         );
     }

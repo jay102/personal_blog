@@ -1,6 +1,5 @@
 import express, { Application, Request, Response, NextFunction } from "express";
 const app: Application = express();
-import path from 'path';
 import bodyParser from 'body-parser';
 const db = require('../database/config/config');
 const port = process.env.PORT || 4000;
@@ -15,6 +14,9 @@ import Tags from './routes/tags'
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+// static folders
+app.use(express.static('uploads'))
+
 //setup headers to handle cors error
 app.use((req: Request, res: Response, next: NextFunction) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -28,10 +30,6 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     }
     next();
 });
-
-// static folders
-app.use(express.static(path.join(__dirname, '/uploads/')));
-
 
 //setup routes
 app.use('/admin', Admin());
