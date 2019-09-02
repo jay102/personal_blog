@@ -1,6 +1,6 @@
 # custom blog panel
-A custom blog panel which powers the Blog on my personal react website. 
-Developed with a TypeScript/JavaScript backend and a React Admin Dashboard.
+A custom blog web app for my personal react website. 
+Developed with a TypeScript/JavaScript backend and a React Frontend for Ui and Admin Dashboard.
 
 Database used was postgres and ORM used was sequelize.
 It has minimal features such as 
@@ -8,6 +8,8 @@ It has minimal features such as
 -View all posts, 
 -Edit post, 
 -Delete post,
+-Add tags
+-Add featured image
 -View all comments
 -Delete Comments
 
