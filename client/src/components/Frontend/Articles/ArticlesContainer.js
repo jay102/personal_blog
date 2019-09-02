@@ -29,11 +29,6 @@ class Articles extends Component {
                 }
             })
     }
-    clickedPost = (e, article) => {
-        e.preventDefault()
-        console.log('clicked')
-        this.props.article(article);
-    }
     render() {
         const Posts = this.state.articles.map(articles => {
             return (

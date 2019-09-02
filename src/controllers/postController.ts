@@ -1,37 +1,45 @@
 import { Request, Response, NextFunction } from 'express'
+//import BlogPost from '../../database/models/Posts';
 
 
 class postController {
-    constructor(private BlogPost: any) {
+    BlogPost: any;
+    constructor(BlogPost: any) {
         this.BlogPost = BlogPost;
     }
 
-    newPost(req: Request, res: Response, next: NextFunction) {
+    newPost = (req: Request, res: Response, next: NextFunction) => {
+        let featured_img: string | undefined;
         let author: string = req.body.author;
         let title: string = req.body.title;
         let post_url: string = req.body.post_url;
         let body: string = req.body.body;
         let time: string = req.body.time;
-        console.log(req.body)
-        console.log(this.BlogPost)
-        // this.BlogPost.create({
-        //     author,
-        //     title,
-        //     post_url,
-        //     body,
-        //     time
-        // })
-        //     .then((result: any) => {
-        //         return res.status(201).json({
-        //             message: "Successful",
-        //             Posts: result
-        //         })
-        //     })
-        //     .catch((err: any) => {
-        //         return res.status(500).json({
-        //             Error: err
-        //         })
-        //     })
+        let tags: string = req.body.tags;
+        const { file } = (<any>req)
+        if (file) {
+            featured_img = file.filename;
+        }
+        this.BlogPost.create({
+            author,
+            title,
+            post_url,
+            body,
+            time,
+            tags,
+            featured_img,
+        })
+            .then((result: any) => {
+                return res.status(201).json({
+                    message: "Successful",
+                    Posts: result
+                })
+            })
+            .catch((err: any) => {
+                return res.status(500).json({
+                    Error: err
+                })
+            })
     }
     //get all posts
     getAllposts = (req: Request, res: Response, next: NextFunction) => {
@@ -135,6 +143,18 @@ class postController {
                 console.log(err)
                 res.status(500).json({ error: { message: err } })
             });
+    }
+
+    articleByUrl = (req: Request, res: Response, next: NextFunction) => {
+        let url: string = req.params.articleUrl;
+        console.log(url, "postURL");
+        this.BlogPost.findOne({ where: { post_url: url } })
+            .then((result: any) => {
+                return res.status(200).json({ status: "successful", article: result })
+            })
+            .catch((err: any) => {
+                return res.status(401).json({ error: err })
+            })
     }
 };
 export default postController;

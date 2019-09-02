@@ -13,7 +13,14 @@ export class NewPost extends Component {
         postContent: "",
         delay: 1000,
         error: false,
-        success: false
+        success: false,
+        tags: [],
+        checked: [],
+        featured_img: null
+    }
+
+    componentDidMount() {
+        this.getTags();
     }
 
     handlePostChange = (value) => {
@@ -34,17 +41,34 @@ export class NewPost extends Component {
         })
 
     }
+    handleTagSelection = (e) => {
+        const { name, checked } = e.target
+        if (checked) {
+            this.setState({ checked: this.state.checked.concat(name) })
+        } else {
+            this.setState({ checked: this.state.checked.filter((item) => item !== name) })
+        }
+    }
+    getTags = () => {
+        axios.get('/tags').then(res => {
+            this.setState({ tags: res.data.tags })
+        })
+    }
+    setImage = (file) => {
+        this.setState({ featured_img: URL.createObjectURL(file) })
+    }
     makeRequest = e => {
         e.preventDefault()
         const time = moment().format("llll");
-        let postData = {
-            post_url: `${slugify(this.state.url)}`,
-            title: this.state.postTitle,
-            body: this.state.postContent,
-            time: time,
-            author: "Admin"
-        }
-        axios.post('/posts/new-post', postData)
+        const data = new FormData()
+        data.append('post_url', `${slugify(this.state.url)}`)
+        data.append('title', this.state.postTitle)
+        data.append('body', this.state.postContent)
+        data.append('time', time)
+        data.append('author', "Admin")
+        data.append('tags', this.state.checked.toString())
+        data.append('image_url', this.state.featured_img)
+        axios.post('/posts/new-post', data)
             .then(res => {
                 //successful post
                 console.log(res.data)
@@ -53,7 +77,8 @@ export class NewPost extends Component {
                         postContent: "",
                         url: "",
                         postTitle: "",
-                        success: !this.state.success
+                        success: !this.state.success,
+                        featured_img: null
                     }
                 )
             })
@@ -74,7 +99,9 @@ export class NewPost extends Component {
                 handleSlugChange={this.handleSlugChange}
                 handlePostTitleChange={this.handlePostTitleChange}
                 handlePostChange={this.handlePostChange}
-                makeRequest={this.makeRequest} />
+                makeRequest={this.makeRequest}
+                handleTagSelection={this.handleTagSelection}
+                setImage={this.setImage} />
         );
     }
 }

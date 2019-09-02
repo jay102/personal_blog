@@ -12,7 +12,6 @@ import AdminLogin from './components/Admin/auth/AdminLogin'
 import Dashboard from './components/Admin/Dashboard/Layout/Dash/Dashboard'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import axios from 'axios'
-import { useState } from 'react'
 export const TemplateFiles = React.createContext();
 
 class App extends Component {
@@ -41,20 +40,14 @@ class App extends Component {
 }
 
 const Frontend = () => {
-  const [article, populateArticle] = useState('');
-  // set article
-  let setArticle = (article) => {
-    populateArticle(article)
-    console.log(article)
-  };
   return (
     <Router>
       <Header />
       <Switch>
-        <Route exact strict path="/" component={Articles} article={setArticle} />
+        <Route exact strict path="/" component={Articles} />
         <Route exact path="/about" component={About} />
         <Route exact path="/contact" component={Contact} />
-        <Route exact strict path={`${article.post_url}`} render={(props) => <SinglePostView data={article} />} />
+        <Route path="/:articleUrl" component={SinglePostView} />
         <Route path="" component={NotFound} />
       </Switch>
       <Footer />

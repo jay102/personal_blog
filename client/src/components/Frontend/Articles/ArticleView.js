@@ -1,5 +1,5 @@
 import React from 'react';
-import DarkNav from '../CategoriesNav/DarkNav'
+import DarkNav from '../../Widgets/CategoriesNav/DarkNav'
 
 const ArticleView = (props) => {
   return (

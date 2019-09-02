@@ -1,7 +1,7 @@
 import React from 'react';
 import { TemplateFiles } from '../../../App'
 import AboutView from './AboutView'
-const AboutContainer = () => {
+const AboutContainer = (props) => {
     return (
         <TemplateFiles.Consumer>
             {value => {

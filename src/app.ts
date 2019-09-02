@@ -1,5 +1,6 @@
 import express, { Application, Request, Response, NextFunction } from "express";
 const app: Application = express();
+import path from 'path';
 import bodyParser from 'body-parser';
 const db = require('../database/config/config');
 const port = process.env.PORT || 4000;
@@ -8,6 +9,7 @@ const port = process.env.PORT || 4000;
 // import routes
 import Admin from './routes/admin'
 import BlogPosts from './routes/blogpost'
+import Tags from './routes/tags'
 
 // body parser
 app.use(bodyParser.json());
@@ -27,10 +29,14 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     next();
 });
 
+// static folders
+app.use(express.static(path.join(__dirname, '/uploads/')));
+
 
 //setup routes
 app.use('/admin', Admin());
-app.use('/posts', BlogPosts())
+app.use('/posts', BlogPosts());
+app.use('/tags', Tags());
 
 //test db
 db.authenticate()

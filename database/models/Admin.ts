@@ -5,6 +5,10 @@ const Admin = db.define("admin", {
     password: {
         type: Sequelize.STRING,
         allowNull: false
+    },
+    image: {
+        type: Sequelize.STRING,
+        allowNull: false
     }
 }, {
         freezeTableName: true

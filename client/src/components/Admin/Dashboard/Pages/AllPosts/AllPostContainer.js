@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import EditModal from './EditPost'
-import AllPostsTable from './Table'
+import AllPostsTable from '../../../../Widgets/Table/Table'
 import slugify from '@sindresorhus/slugify'
 import moment from 'moment'
 

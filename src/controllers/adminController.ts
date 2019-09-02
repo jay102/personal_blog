@@ -46,5 +46,37 @@ class AdminController {
       })
     });
   }
+
+  // upload image
+  updateImage = (req: Request, res: Response, next: NextFunction) => {
+    let img: string | undefined;
+    const { file } = (<any>req)
+    if (file) {
+      img = file.filename;
+    }
+    let values = {
+      image: img,
+    };
+    let selector = { where: { id: req.params.id } };
+    this.Admin.update(values, selector)
+      .then((result: any) => {
+        console.log(result)
+        if (result[0] === 1) {
+          return res.status(200).json({
+            message: "Admin image updated Successfully"
+          });
+        } else {
+          return res.status(401).json({
+            error: {
+              message: "Could not Edit Image"
+            }
+          });
+        }
+      })
+      .catch((err: any) => {
+        console.log(err)
+        res.status(500).json({ error: { message: err } })
+      });
+  }
 }
 export default AdminController

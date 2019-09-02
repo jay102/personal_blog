@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 const Article = (props) => {
@@ -10,7 +10,7 @@ const Article = (props) => {
         <Title title={props.title} post_url={props.post_url} />
         <Author author={props.author} time={props.time} />
         <Subtitle body={props.body} />
-        <ReadMore post_url={props.post_url} />
+        <ReadMore post_url={props.post_url} id={props.id} />
       </div>
     </div>
   );
@@ -18,7 +18,7 @@ const Article = (props) => {
 // Title
 const Title = (props) => <a href={props.post_url}> <h2 className="post-title">{props.title}</h2></a>
 // Subtitle
-const Subtitle = (props) => <a><h3 className="post-subtitle">{props.body.split("", 200)}... </h3></a>;
+const Subtitle = (props) => <a><h3 className="post-subtitle">{escapeChar(props.body).split("", 200)}... </h3></a>;
 // Author
 const Author = (props) => {
   return <div className="author">
@@ -27,5 +27,13 @@ const Author = (props) => {
   </div>
 }
 // Readmore
-const ReadMore = (props) => <NavLink onClick={e => props.clicked(e, props)} to={`${props.post_url}`}>  <p className="read-more">Read More</p></NavLink>
+const ReadMore = (props) => <Link to={`/${props.post_url}`}>  <p className="read-more">Read More</p></Link>
+
+const escapeChar = (str) => {
+  if ((str === null) || (str === ''))
+    return false;
+  else
+    str = str.toString();
+  return str.replace(/[&<>"'`#*:,]/g, ' ');
+}
 export default Article;

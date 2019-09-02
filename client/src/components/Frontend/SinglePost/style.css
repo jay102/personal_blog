@@ -5,3 +5,9 @@
   padding-bottom: 1rem!important;
   padding-top: 1rem!important;
 }
+.single_article {
+margin:0px !important
+}
+.single_post{
+  background: rgba(0,0,0,.82);
+}

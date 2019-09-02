@@ -21,6 +21,14 @@ const BlogPost = db.define("blog_post", {
     post_url: {
         type: Sequelize.STRING,
         allowNull: false
+    },
+    tags: {
+        type: Sequelize.STRING,
+        allowNull: true
+    },
+    featured_img: {
+        type: Sequelize.STRING,
+        allowNull: true
     }
 });
 export default BlogPost;
