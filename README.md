@@ -13,5 +13,5 @@ It has minimal features such as
 
 More features would be added depending on the amount of time i've got
 ![](https://jaycodes.com/images/portfolio/blog_frontend.PNG)
-![](https://jaycodes.com/images/blog_frontend_body.PNG)
+![](https://jaycodes.com/images/portfolio/blog_frontend_body.PNG)
 ![](https://jaycodes.com/images/portfolio/blog.PNG)
