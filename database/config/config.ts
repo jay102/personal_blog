@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 // Option 1: Passing parameters separately
-const db = new Sequelize('jaycodes', 'postgres', '123ifeco', {
+const db = new Sequelize('jaycodes', 'postgres', 'password', {
     host: 'localhost',
     dialect: 'postgres',
 
