@@ -7,7 +7,7 @@ describe('Admin Endpoints', () => {
     const res = await request(app)
       .post('/admin/login')
       .send({
-        password: "123ifeco",
+        password: "password",
       })
     expect(res.statusCode).toEqual(201)
     expect(res.body.message).toEqual('success')
