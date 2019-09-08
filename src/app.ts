@@ -1,7 +1,7 @@
 import express, { Application, Request, Response, NextFunction } from "express";
 const app: Application = express();
 import bodyParser from 'body-parser';
-const db = require('../database/config/config');
+const db = require('./database/config/config');
 const port = process.env.PORT || 4000;
 
 
@@ -42,6 +42,7 @@ db.authenticate()
     .catch((err: string) => console.log("Error :" + err));
 
 
-app.listen(port, () => {
+export const server = app.listen(port, () => {
     console.log(`Connected to port ${port}`)
 })
+module.exports = app;

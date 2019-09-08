@@ -1,6 +1,6 @@
 import express from 'express'
-import Tag from '../../database/models/Tags'
-import BlogPost from '../../database/models/Posts'
+import Tag from '../database/models/Tags'
+import BlogPost from '../database/models/Posts'
 import TagController from '../controllers/tagsController';
 
 const Tags = () => {

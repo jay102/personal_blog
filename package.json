@@ -10,7 +10,15 @@
     "both": "concurrently \"npm run dev\" \"npm run client\"",
     "build": "tsc -p .",
     "lint": "eslint .",
-    "test": "mocha"
+    "jest": {
+      "testEnvironment": "node",
+      "coveragePathIgnorePatterns": [
+        "/node_modules/"
+      ]
+    },
+    "migrate": "npx sequelize-cli db:migrate",
+    "migrate:reset": "npx sequelize-cli db:migrate:undo:all && npm run migrate",
+    "test": "cross-env NODE_ENV=test jest --testTimeout=10000  --detectOpenHandles"
   },
   "author": "Ikwechegh James",
   "license": "ISC",
@@ -25,17 +33,17 @@
     "nodemon": "^1.19.0",
     "pg": "^7.11.0",
     "pg-hstore": "^2.3.2",
-    "react-syntax-highlighter": "^11.0.2",
     "sequelize": "^5.15.1"
   },
   "devDependencies": {
     "@types/express": "^4.16.1",
     "@types/node": "^12.0.2",
+    "cross-env": "^5.2.1",
+    "dotenv": "^8.1.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
-    "mocha": "^6.2.0",
-    "should": "^13.2.3",
-    "sinon": "^7.4.1",
+    "jest": "^24.9.0",
+    "supertest": "^4.0.2",
     "ts-node": "^8.1.0",
     "typescript": "^3.4.5"
   }

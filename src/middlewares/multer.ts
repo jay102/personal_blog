@@ -1,16 +1,16 @@
 const moment = require('moment');
 
-function setupMulter(multer) {
+function setupMulter(multer: any) {
   const storage = multer.diskStorage({
-    destination(req, file, cb) {
+    destination(req: any, file: any, cb: any) {
       cb(null, './uploads/articles/imgs');
     },
-    filename(req, file, cb) {
+    filename(req: any, file: any, cb: any) {
       cb(null, `${moment().format('YYYY-MM-DD')}-${file.originalname}`);
     },
   });
 
-  const fileFilter = (req, file, cb) => {
+  const fileFilter = (req: any, file: any, cb: any) => {
     if (
       file.mimetype === 'image/png'
       || file.mimetype === 'image/jpeg'

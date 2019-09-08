@@ -1,5 +1,5 @@
 import PostController from '../controllers/postController';
-import BlogPost from '../../database/models/Posts'
+import BlogPost from '../database/models/Posts'
 const multerSetup = require('../middlewares/multer');
 const multer = require('multer');
 import express from 'express'

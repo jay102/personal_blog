@@ -1,6 +1,6 @@
 import express from 'express'
 import AdminController from '../controllers/adminController'
-import Admin from '../../database/models/Admin'
+import Admin from '../database/models/Admin'
 const multerSetup = require('../middlewares/multer');
 const multer = require('multer');
 

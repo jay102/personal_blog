@@ -39,7 +39,7 @@ class AdminController {
         if (!response) {
           return res.status(404).json({ error: "Incorrect password." });
         } else {
-          return res.status(200).json({ message: "success.", user_id: user.id });
+          return res.status(201).json({ message: "success", user_id: user.id });
         }
       });
     }).catch((err: any) => res.status(401).json({ error: err }));
