@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import articlesRepository from '../../../../../services/articlesRepository'
 import axios from 'axios'
-import EditModal from './EditPost'
+import EditModal from './EditModal'
 import AllPostsTable from '../../../../Widgets/Table/Table'
 import slugify from '@sindresorhus/slugify'
 import moment from 'moment'
 
+
+const repository = articlesRepository(axios)
 class AllPosts extends Component {
     constructor(props) {
         super(props);
@@ -22,7 +25,7 @@ class AllPosts extends Component {
         }
     }
     componentDidMount() {
-        this.getPosts()
+        this.getPosts(1)
     }
     handlePostChange = (value) => {
         this.setState({
@@ -42,20 +45,17 @@ class AllPosts extends Component {
         })
 
     }
-    getPosts = () => {
-        axios.get('/posts')
-            .then(res => {
-                let result = res.data.Posts
-                // console.log(result)
-                this.setState({
-                    posts: result
-                })
+    getPosts = async (page) => {
+        try {
+            const posts = await repository.getArticles(page)
+            this.setState({
+                posts: posts
             })
-            .catch(err => {
-                if (err.response) {
-                    console.log(err.response)
-                }
-            })
+        } catch (err) {
+            if (err.response) {
+                console.log(err.response)
+            }
+        }
     }
     deletePost = (e, postId) => {
         e.preventDefault();

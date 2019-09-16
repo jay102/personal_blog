@@ -28,7 +28,7 @@ class Header extends Component {
                             <li className="nav-item">
                                 <NavLink to="/contact" className="nav-link" href="/contact">Contact</NavLink>
                             </li>
-                            {user_id == 1 ? <li className="nav-item">
+                            {user_id === 1 ? <li className="nav-item">
                                 <NavLink onClick={this.setRedirect} to="/admin/dashboard" className="nav-link">Dashboard</NavLink>
                             </li> : null}
                         </ul>

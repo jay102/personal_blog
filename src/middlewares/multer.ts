@@ -1,6 +1,6 @@
 const moment = require('moment');
 
-function setupMulter(multer: any) {
+const setupMulter = (multer: any) => {
   const storage = multer.diskStorage({
     destination(req: any, file: any, cb: any) {
       cb(null, './uploads/articles/imgs');

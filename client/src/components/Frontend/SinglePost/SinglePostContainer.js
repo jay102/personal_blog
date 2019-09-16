@@ -5,11 +5,13 @@ import axios from 'axios';
 
 class SinglePostContainer extends Component {
   state = {
-    article: ""
+    article: "",
+    tags: ""
   }
   componentDidMount() {
     const { articleUrl } = this.props.match.params
     this.getArticle(articleUrl);
+    this.getTags();
   }
 
   getArticle = (articleUrl) => {
@@ -20,6 +22,11 @@ class SinglePostContainer extends Component {
           console.log(err.response)
         }
       })
+  }
+  getTags = () => {
+    axios.get('/tags').then(res => {
+      this.setState({ tags: res.data.tags })
+    })
   }
   render() {
     return (

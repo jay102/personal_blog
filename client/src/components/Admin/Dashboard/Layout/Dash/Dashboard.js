@@ -10,6 +10,7 @@ import './dashboard_css.css'
 import DashboardBody from '../../Pages/Main/content'
 import NewPost from '../../Pages/NewPost/NewPostContainer'
 import AllPosts from '../../Pages/AllPosts/AllPostContainer'
+import Tags from '../../Pages/Tags/TagsContainer'
 
 class Dashboard extends Component {
     constructor(props) {
@@ -29,6 +30,7 @@ class Dashboard extends Component {
                                 <Route exact strict path="/admin/dashboard" component={DashboardBody} />
                                 <Route exact strict path="/admin/dashboard/new-post" component={NewPost} />
                                 <Route exact strict path="/admin/dashboard/all-posts" component={AllPosts} />
+                                <Route exact strict path="/admin/dashboard/tags" component={Tags} />
                             </Switch>
                         </main>
                     </div>

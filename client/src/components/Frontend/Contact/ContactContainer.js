@@ -5,8 +5,9 @@ const ContactContainer = () => {
     return (
         <TemplateFiles.Consumer>
             {value => {
-                let mystyle = { backgroundImage: "url(" + value.Contact.bg + ")" };
-                return <ContactView text={value.Contact.text} subtitle={value.Contact.subtitle} mystyle={mystyle} header={value.Contact.header} />
+                const { Contact } = value.siteData;
+                let mystyle = { backgroundImage: "url(" + Contact.bg + ")" };
+                return <ContactView text={Contact.text} subtitle={Contact.subtitle} mystyle={mystyle} header={Contact.header} />
             }}
         </TemplateFiles.Consumer>
     );

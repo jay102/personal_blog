@@ -4,7 +4,7 @@ import DarkNav from '../../Widgets/CategoriesNav/DarkNav'
 const ArticleView = (props) => {
   return (
     <React.Fragment>
-      <header className="masthead" style={props.mystyle}>
+      <header className={`${props.header_style}`} style={props.mystyle}>
         <div className="overlay"></div>
         <div className="container">
           <div className="row">

@@ -10,10 +10,15 @@ import About from './components/Frontend/About/AboutContainer'
 import Contact from './components/Frontend/Contact/ContactContainer'
 import AdminLogin from './components/Admin/auth/AdminLogin'
 import Dashboard from './components/Admin/Dashboard/Layout/Dash/Dashboard'
+import Tags from './components/Frontend/ArticleTags/TagsContainer'
+import Spinner from './components/Widgets/Spinner/spinner'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import userRepository from './services/usersRepository'
 import axios from 'axios'
 export const TemplateFiles = React.createContext();
 
+
+const repository = userRepository(axios);
 class App extends Component {
   constructor(props) {
     super(props);
@@ -25,35 +30,34 @@ class App extends Component {
     localStorage.setItem('backend_url', this.backendurl);
   }
   componentDidMount() {
-    this.getAdminImage(1)
+    this.getImage()
   }
-  getAdminImage = (id) => {
-    axios.get(`/admin/${id}`)
-      .then(res => this.setState({ admin: res.data }))
-      .catch(err => {
-        if (err.response) {
-          console.log(err.response);
-        }
-      })
-
+  getImage = async () => {
+    const data = await repository.getAdminAvatar(1)
+    this.setState({ admin: data })
   }
-
   render() {
-    // if (!this.state.admin.length)
-    //   return null;
     //set default url for axios
     axios.defaults.baseURL = this.backendurl;
-    return (
-      <TemplateFiles.Provider value={this.state}>
-        <Router>
-          <Switch>
-            <Route exact strict path="/admin/login" component={AdminLogin} />
-            <Route path="/admin/dashboard" render={(props) => <Dashboard />} />
-            <Route path="/" component={Frontend} />
-          </Switch>
-        </Router>
-      </TemplateFiles.Provider>
-    );
+    const { admin, siteData } = this.state
+    if (admin === undefined || admin.length === 0 || siteData === undefined || Object.keys(siteData).length === 0) {
+      return <Spinner />
+    } else {
+      return (
+        <TemplateFiles.Provider value={this.state}>
+          <Router>
+            <Switch>
+              <Route exact strict path="/admin/login" component={AdminLogin} />
+              <Route exact path="/posts/:articleUrl" component={SinglePostView} />
+              <Route exact path="/tag/:tag" component={Tags} />
+              <Route path="/admin/dashboard" render={(props) => <Dashboard />} />
+              <Route path="/" component={Frontend} />
+              <Route path="" component={NotFound} />
+            </Switch>
+          </Router>
+        </TemplateFiles.Provider>
+      );
+    }
   }
 }
 
@@ -63,10 +67,8 @@ const Frontend = () => {
       <Header />
       <Switch>
         <Route exact strict path="/" component={Articles} />
-        <Route exact path="/about" component={About} />
-        <Route exact path="/contact" component={Contact} />
-        <Route path="/:articleUrl" component={SinglePostView} />
-        <Route path="" component={NotFound} />
+        <Route exact strict path="/about" component={About} />
+        <Route exact strict path="/contact" component={Contact} />
       </Switch>
       <Footer />
     </Router>

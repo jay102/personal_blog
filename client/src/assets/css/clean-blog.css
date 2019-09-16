@@ -189,6 +189,15 @@ header.masthead .overlay {
   opacity: 0.5;
 }
 
+.tag .overlay{
+  opacity: 0.8 !important;
+}
+.tag .page-heading,
+.tag .post-heading,
+.tag .site-heading{
+  padding: 60px 0 150px !important;
+}
+
 header.masthead .page-heading,
 header.masthead .post-heading,
 header.masthead .site-heading {
@@ -202,6 +211,11 @@ header.masthead .site-heading {
   header.masthead .site-heading {
     padding: 200px 0;
   }
+  .tag .page-heading,
+  .tag .post-heading,
+  .tag .site-heading{
+  padding: 60px 0 !important;
+}
 }
 
 header.masthead .page-heading,
@@ -212,6 +226,11 @@ header.masthead .site-heading {
 header.masthead .page-heading h1,
 header.masthead .site-heading h1 {
   font-size: 50px;
+  margin-top: 0;
+}
+.tag .page-heading h1,
+.tag .site-heading h1 {
+  font-size: 50px !important;
   margin-top: 0;
 }
 
@@ -507,7 +526,7 @@ footer .copyright {
 .color-react {
   color: #00d8ff;
 }
-.color-angular {
+.color-projects {
   color: #e03237;
 }
 .color-javascript {
@@ -519,9 +538,18 @@ footer .copyright {
 .color-android {
   color: #49d091;
 }
-.color-css {
+.color-java {
   color: #2ca9e1;
 }
 .color-vs-code {
   color: #a5d8fa;
+}
+.edit_icon {
+  float: right;
+  color: red;
+}
+.delete_icon {
+  float: right;
+  margin-right: 10px;
+  color: #0085A1
 }

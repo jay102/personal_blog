@@ -116,7 +116,7 @@ const Tags = (props) => {
     return (
         <div className="col-lg-6">
             {props.tags.map(item => {
-                return <CheckBox title={item.tag} handleSelection={props.handleSelection} key={item.id} />
+                return <CheckBox theme="-inline" title={item.tag} handleSelection={props.handleSelection} key={item.id} />
             })}
         </div>
     );

@@ -1,18 +1,15 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown'
-import PropTypes from 'prop-types';
 import './style.css'
-import Nav from './NavBar'
-import SideBar from './SideBar'
-import CommentForm from './CommentForm'
-import SingleComment from './SingleComment'
+import Nav from './NavBar/NavBar'
+import SideBar from './Sidebar/SideBar'
+import DisQusForm from './Comments/DisQusForm'
 import CodeBlock from '../../Admin/Dashboard/Pages/NewPost/codeBlock'
+import Footer from './Footer/Footer';
 const img = require('../../../assets/img/logo.png');
 
 
-
 const SinglePostView = (props) => {
-
   return (
     <>
       <Nav img={img} />
@@ -22,6 +19,7 @@ const SinglePostView = (props) => {
 
 }
 const Post = (props) => {
+  const featured_image = `${localStorage.getItem('backend_url')}/articles/imgs/${props.article.featured_img}`
   return (
     <>
       <div className="container post">
@@ -35,7 +33,7 @@ const Post = (props) => {
             <hr />
 
             {/* <!-- Preview Image --> */}
-            <img className="img-fluid rounded" src={`${props.article.featured_img}`} alt="featured" height="500px" width="700px" />
+            <img className="img-fluid rounded" src={`${featured_image}`} alt="featured" height="500px" width="700px" />
             <hr />
             <ReactMarkdown
               source={props.article.body}
@@ -44,17 +42,14 @@ const Post = (props) => {
               }} />
 
             <hr />
-            <CommentForm />
-
-            <SingleComment />
+            {props.article ? <DisQusForm id={props.article.id} /> : null}
           </div>
-          <SideBar />
+          <SideBar tags={props.tags} />
         </div>
       </div>
+      <Footer />
     </>
   );
 }
-SinglePostView.propTypes = {
-  value: PropTypes.string.isRequired,
-};
+
 export default SinglePostView;

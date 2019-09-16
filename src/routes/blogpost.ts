@@ -17,7 +17,7 @@ const blogPostRouter = () => {
     .get(controller.getAllposts)
 
   // get limited blogposts for dashboard
-  router.route('/limit')
+  router.route('/limit/:page')
     .get(controller.getLimitedPosts)
 
   // get posts count

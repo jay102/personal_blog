@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import "easymde/dist/easymde.min.css";
+import articlesRepository from '../../../../../services/articlesRepository'
 import axios from 'axios'
 import slugify from '@sindresorhus/slugify'
 import moment from 'moment'
 import NewPostView from './NewPostView'
 
-
+const repository = articlesRepository(axios)
 export class NewPost extends Component {
     state = {
         url: "",
@@ -16,7 +17,8 @@ export class NewPost extends Component {
         success: false,
         tags: [],
         checked: [],
-        featured_img: null
+        featured_img: null,
+        file: null
     }
 
     componentDidMount() {
@@ -49,25 +51,29 @@ export class NewPost extends Component {
             this.setState({ checked: this.state.checked.filter((item) => item !== name) })
         }
     }
-    getTags = () => {
-        axios.get('/tags').then(res => {
-            this.setState({ tags: res.data.tags })
-        })
+    getTags = async () => {
+        try {
+            const data = await repository.getTags();
+            this.setState({ tags: data })
+        } catch (err) {
+            console.log(err)
+        }
     }
+
     setImage = (file) => {
-        this.setState({ featured_img: URL.createObjectURL(file) })
+        this.setState({ featured_img: URL.createObjectURL(file), file: file })
     }
     makeRequest = e => {
         e.preventDefault()
         const time = moment().format("llll");
-        const data = new FormData()
+        const data = new FormData();
         data.append('post_url', `${slugify(this.state.url)}`)
         data.append('title', this.state.postTitle)
         data.append('body', this.state.postContent)
         data.append('time', time)
         data.append('author', "Admin")
         data.append('tags', this.state.checked.toString())
-        data.append('image_url', this.state.featured_img)
+        data.append('image_url', this.state.file)
         axios.post('/posts/new-post', data)
             .then(res => {
                 //successful post

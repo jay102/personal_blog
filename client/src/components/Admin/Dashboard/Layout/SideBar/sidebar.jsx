@@ -31,6 +31,9 @@ class SideBar extends Component {
                 <NavLink className="nav-link" activeStyle={activeLink} to="/admin/dashboard/all-posts"><span style={iconStyle}><i className="fa fa-poll-h"></i></span>All Posts</NavLink>
               </li>
               <li >
+                <NavLink className="nav-link" activeStyle={activeLink} to="/admin/dashboard/tags"><span style={iconStyle}><i className="fas fa-tags"></i></span>Tags</NavLink>
+              </li>
+              <li >
                 <NavLink onClick={this.logout} className="nav-link" activeStyle={activeLink} to="/admin/login"><span style={iconStyle}><i className="fa fa-step-forward"></i></span>Signout</NavLink>
               </li>
             </ul>

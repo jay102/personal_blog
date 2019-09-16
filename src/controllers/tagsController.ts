@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+const { Op } = require('sequelize');
 class TagsController {
   Tag: any;
   BlogPost: any;
@@ -8,19 +9,16 @@ class TagsController {
   }
 
   addTag = (req: Request, res: Response, next: NextFunction) => {
-    let tag = req.body.tag
-    this.Tag.create({
-      tag
-    })
+    this.Tag.create(req.body)
       .then((response: any) => {
         res.status(200).json({
           message: "tag added successfully",
           tag: response
         })
       })
-      .catch((err: any) => {
+      .catch((err: string) => {
         res.json({
-          error: "an error occured"
+          error: err
         })
       })
   }
@@ -30,29 +28,31 @@ class TagsController {
       .then((response: any) => {
         res.status(201).json({ tags: response })
       })
-      .catch((err: any) => {
+      .catch((err: string) => {
         res.json({ error: "an error occured" })
       })
   }
 
   deleteTag = (req: Request, res: Response, next: NextFunction) => {
-    let id: number = req.body.id;
+    console.log(req.body)
     this.Tag.destroy({
-      where: { id: id }
+      where: req.body
     })
       .then((response: any) => {
         res.status(200).json({ message: "tag deleted" })
       })
-      .catch((err: any) => {
-        res.json({ error: "an error ocurred" })
+      .catch((err: string) => {
+        res.json({ error: err })
       })
   }
 
   editTag = (req: Request, res: Response, next: NextFunction) => {
     let values = {
-      tag: req.body.title,
+      tag: req.body.tag,
+      url: req.body.url,
+      class: req.body.class
     };
-    let selector = { where: { id: req.params.id } };
+    let selector = { where: { id: req.body.id } };
     this.Tag.update(values, selector)
       .then((result: any) => {
         if (result[0] === 1) {
@@ -67,19 +67,19 @@ class TagsController {
           });
         }
       })
-      .catch((err: any) => {
+      .catch((err: string) => {
         console.log(err)
         res.status(500).json({ error: { message: err } })
       });
   }
 
   getArticlesByTag = (req: Request, res: Response, next: NextFunction) => {
-    this.BlogPost.findAll({ where: { tags: req.params.tags } })
+    this.BlogPost.findAll({ where: { tags: { [Op.iLike]: `%${req.params.tag}%` } } })
       .then((response: any) => {
         res.status(201).json({ articles: response })
       })
-      .catch((err: any) => {
-        res.json({ error: "an error occured" })
+      .catch((err: string) => {
+        res.json({ error: err })
       })
   }
 }

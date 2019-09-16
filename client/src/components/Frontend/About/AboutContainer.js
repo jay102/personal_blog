@@ -1,14 +1,15 @@
 import React from 'react';
 import { TemplateFiles } from '../../../App'
 import AboutView from './AboutView'
-const AboutContainer = (props) => {
+const AboutContainer = () => {
     return (
         <TemplateFiles.Consumer>
             {value => {
+                const { About } = value.siteData;
                 let style = {
-                    backgroundImage: "url(" + value.About.bg + ")"
+                    backgroundImage: "url(" + About.bg + ")"
                 }
-                return <AboutView Title={value.About.header} subTitle={value.About.subtitle} bg={style} text={value.About.text} />
+                return <AboutView Title={About.header} subTitle={About.subtitle} bg={style} text={About.text} />
             }}
         </TemplateFiles.Consumer>
     );

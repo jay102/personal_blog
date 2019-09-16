@@ -20,6 +20,7 @@ class postController {
         if (file) {
             featured_img = file.filename;
         }
+        console.log(file, "file")
         this.BlogPost.create({
             author,
             title,
@@ -73,7 +74,8 @@ class postController {
     }
     //get limited number of posts 
     getLimitedPosts = (req: Request, res: Response, next: NextFunction) => {
-        this.BlogPost.findAll({ limit: 10 })
+        console.log(req.params.page)
+        this.BlogPost.findAll({ limit: 10, offset: req.params.page })
             .then((result: any) => {
                 return res.status(200).json({
                     message: "successful",
@@ -106,7 +108,7 @@ class postController {
     }
     // delete post by id
     deletePost = (req: Request, res: Response, next: NextFunction) => {
-        let postid: Number = req.params.postid;
+        let postid: string = req.params.postid;
         console.log(postid, "post_id")
         this.BlogPost.destroy({ where: { id: postid } })
             .then((result: any) => {
