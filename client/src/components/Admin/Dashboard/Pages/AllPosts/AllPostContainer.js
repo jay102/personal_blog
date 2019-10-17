@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
-import articlesRepository from '../../../../../services/articlesRepository'
+import articles_service from '../../../../../services/articles.service'
 import axios from 'axios'
 import EditModal from './EditModal'
 import AllPostsTable from '../../../../Widgets/Table/Table'
 import slugify from '@sindresorhus/slugify'
+import Toolbar from '../NewPost/ToolBar'
 import moment from 'moment'
 
 
-const repository = articlesRepository(axios)
+const repository = articles_service(axios)
 class AllPosts extends Component {
     constructor(props) {
         super(props);
         this.state = {
             posts: [],
+            tags: [],
+            checked: [],
             edit_state: false,
             delay: 1000,
             editPosts: [],
@@ -20,12 +23,15 @@ class AllPosts extends Component {
             new_postTitle: "",
             new_postContent: "",
             post_id: "",
+            featured_img: null,
+            file: null,
             success: false,
             error: false
         }
     }
     componentDidMount() {
         this.getPosts(1)
+        this.getTags()
     }
     handlePostChange = (value) => {
         this.setState({
@@ -45,6 +51,15 @@ class AllPosts extends Component {
         })
 
     }
+    handleTagSelection = (e) => {
+        const { name, checked } = e.target
+        console.log(name, checked)
+        if (checked) {
+            this.setState({ checked: this.state.checked.concat(name) })
+        } else {
+            this.setState({ checked: this.state.checked.filter((item) => item !== name) })
+        }
+    }
     getPosts = async (page) => {
         try {
             const posts = await repository.getArticles(page)
@@ -55,6 +70,14 @@ class AllPosts extends Component {
             if (err.response) {
                 console.log(err.response)
             }
+        }
+    }
+    getTags = async () => {
+        try {
+            const data = await repository.getTags();
+            this.setState({ tags: data })
+        } catch (err) {
+            console.log(err)
         }
     }
     deletePost = (e, postId) => {
@@ -79,27 +102,48 @@ class AllPosts extends Component {
                 }
             })
     }
+    emptyTags = (e) => {
+        e.preventDefault()
+        this.setState({
+            checked: []
+        })
+    }
+    setImage = (file) => {
+        this.setState({
+            featured_img: URL.createObjectURL(file),
+            file
+        })
+        console.log(this.state.file)
+    }
     toggleEdit = (e, postsEdits) => {
         e.preventDefault();
         this.setState({
             new_postTitle: postsEdits.title,
             new_postContent: postsEdits.body,
             new_url: postsEdits.post_url,
-            post_id: postsEdits.id
+            post_id: postsEdits.id,
         })
     }
-    makeRequest = (e, postId) => {
+    // formatToObject = (tags) => {
+    //     return tags.split(',').reduce((obj, item) => {
+    //         if (!obj[item]) {
+    //             obj[item] = true;
+    //         }
+    //         return obj;
+    //     }, {});
+    // }
+    makeRequest = (e, postid) => {
         e.preventDefault()
-        console.log(postId)
-        const time = moment().format("llll");
-        let postData = {
-            post_url: `${slugify(this.state.new_url)}`,
-            title: this.state.new_postTitle,
-            body: this.state.new_postContent,
-            time: time,
-            author: "Admin"
-        }
-        axios.put(`/posts/${postId}`, postData)
+        const data = new FormData();
+        data.append('post_url', `${slugify(this.state.new_url)}`)
+        data.append('title', this.state.new_postTitle)
+        data.append('body', this.state.new_postContent)
+        data.append('time', moment().format("llll"))
+        data.append('author', "Admin")
+        data.append('tags', this.state.checked.toString())
+        data.append('image_url', this.state.file)
+
+        axios.put(`/posts/${postid}`, data)
             .then(res => {
                 //successful post
                 console.log(res.data)
@@ -108,7 +152,10 @@ class AllPosts extends Component {
                         new_postContent: "",
                         new_url: "",
                         new_postTitle: "",
-                        success: !this.state.success
+                        success: !this.state.success,
+                        post_tags: {},
+                        checked: [],
+                        featured_img: null
                     }
                 )
                 this.getPosts();
@@ -132,8 +179,8 @@ class AllPosts extends Component {
                         <td>{posts.author}</td>
                         <td>{posts.time}</td>
                         <td style={{ fontSize: "0.72rem" }}>
-                            <button onClick={e => this.toggleEdit(e, posts)} className="mybutton" style={{ marginRight: "5px" }} data-toggle="modal" data-target="#edit">Edit</button>{" "}
-                            <button onClick={e => this.deletePost(e, posts.id)} className="mybutton">Delete</button></td>
+                            <button onClick={(e) => this.toggleEdit(e, posts)} className="mybutton" style={{ marginRight: "5px" }} data-toggle="modal" data-target="#edit" data-backdrop="static" data-keyboard="false">Edit</button>{" "}
+                            <button onClick={(e) => this.deletePost(e, posts.id)} className="mybutton">Delete</button></td>
                     </tr>
                 </tbody>
             );
@@ -145,8 +192,13 @@ class AllPosts extends Component {
                     handleSlugChange={this.handleSlugChange}
                     handlePostTitleChange={this.handlePostTitleChange}
                     handlePostChange={this.handlePostChange}
+                    handleSelection={this.handleTagSelection}
                     makeRequest={this.makeRequest}
-                    state={this.state} />
+                    emptyTags={this.emptyTags}
+                    state={this.state}
+                    setImage={this.setImage}
+                    toolbar={Toolbar}
+                    backendurl={this.props.backendurl} />
             </>
         );
     }

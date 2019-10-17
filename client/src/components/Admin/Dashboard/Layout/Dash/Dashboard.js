@@ -28,8 +28,8 @@ class Dashboard extends Component {
                         <main role="main" className="col">
                             <Switch>
                                 <Route exact strict path="/admin/dashboard" component={DashboardBody} />
-                                <Route exact strict path="/admin/dashboard/new-post" component={NewPost} />
-                                <Route exact strict path="/admin/dashboard/all-posts" component={AllPosts} />
+                                <Route exact strict path="/admin/dashboard/new-post" render={(props) => <NewPost backendurl={this.props.backendurl} />} />
+                                <Route exact strict path="/admin/dashboard/all-posts" render={(props) => <AllPosts backendurl={this.props.backendurl} />} />
                                 <Route exact strict path="/admin/dashboard/tags" component={Tags} />
                             </Switch>
                         </main>

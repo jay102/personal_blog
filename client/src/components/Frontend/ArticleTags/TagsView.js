@@ -14,6 +14,8 @@ const TagsView = (props) => {
   return (
     <>
       <ArticleView
+        paginate={props.paginate}
+        pageNumber={props.pageNumber}
         data={data}
         header_style="masthead tag"
         Posts={props.Posts}

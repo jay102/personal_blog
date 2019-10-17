@@ -13,7 +13,7 @@ import Dashboard from './components/Admin/Dashboard/Layout/Dash/Dashboard'
 import Tags from './components/Frontend/ArticleTags/TagsContainer'
 import Spinner from './components/Widgets/Spinner/spinner'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import userRepository from './services/usersRepository'
+import userRepository from './services/users.service'
 import axios from 'axios'
 export const TemplateFiles = React.createContext();
 
@@ -50,7 +50,8 @@ class App extends Component {
               <Route exact strict path="/admin/login" component={AdminLogin} />
               <Route exact path="/posts/:articleUrl" component={SinglePostView} />
               <Route exact path="/tag/:tag" component={Tags} />
-              <Route path="/admin/dashboard" render={(props) => <Dashboard />} />
+              <Route path="/admin/dashboard" render={(props) => <Dashboard backendurl={this.backendurl} />} />
+              <Route path="/404" component={NotFound} />
               <Route path="/" component={Frontend} />
               <Route path="" component={NotFound} />
             </Switch>

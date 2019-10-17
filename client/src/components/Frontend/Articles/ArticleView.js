@@ -23,7 +23,8 @@ const ArticleView = (props) => {
           <div className="col-lg-8 col-md-10 mx-auto">
             {props.Posts}
             <div className="clearfix">
-              <button className="btn btn-primary float-right" href="#">Older Posts &rarr;</button>
+              {props.pageNumber > 1 ? <button onClick={props.paginate.decrement} className="btn btn-primary float-left" href="#">&larr; Previous Posts</button> : null}
+              <button onClick={props.paginate.increment} className="btn btn-primary float-right" href="#">Older Posts &rarr;</button>
             </div>
           </div>
         </div>

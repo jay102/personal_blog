@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import AllTagsView from './AllTagsView'
 import Card from '../../../../../Widgets/Card/Card'
-import articlesRepository from '../../../../../../services/articlesRepository'
+import articlesRepository from '../../../../../../services/articles.service'
 import axios from 'axios'
 import Modal from '../../../../../Widgets/Modal/Modal';
 

@@ -24,4 +24,4 @@ const AdminRoutes = () => {
         .put(multerInit.single('image_url'), adminController.updateImage)
     return router;
 }
-export default AdminRoutes;
+export default AdminRoutes();

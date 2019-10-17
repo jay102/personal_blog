@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import SinglePostView from './SinglePostView'
+import articles_service from '../../../services/articles.service'
 import axios from 'axios';
 
-
+const repository = articles_service(axios)
 class SinglePostContainer extends Component {
   state = {
     article: "",
@@ -10,18 +11,17 @@ class SinglePostContainer extends Component {
   }
   componentDidMount() {
     const { articleUrl } = this.props.match.params
-    this.getArticle(articleUrl);
     this.getTags();
+    this.getArticle(articleUrl);
   }
 
-  getArticle = (articleUrl) => {
-    axios.get(`/posts/tag/${articleUrl}`)
-      .then(res => this.setState({ article: res.data.article }))
-      .catch(err => {
-        if (err.response) {
-          console.log(err.response)
-        }
-      })
+  getArticle = async (articleUrl) => {
+    try {
+      const article = await repository.getArticle(articleUrl);
+      !!article ? this.setState({ article }) : this.props.history.push('/404');
+    } catch (err) {
+      console.log(err.response)
+    }
   }
   getTags = () => {
     axios.get('/tags').then(res => {

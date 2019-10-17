@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import articlesRepository from '../../../services/articlesRepository'
+import articlesRepository from '../../../services/articles.service'
 import { TemplateFiles } from '../../../App'
 import ArticleView from './ArticleView'
 import Article from './Article'
@@ -11,11 +11,12 @@ class Articles extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            articles: []
+            articles: [],
+            pageNumber: 1
         }
     }
     componentDidMount() {
-        this.getArticles(1);
+        this.getArticles(this.state.pageNumber);
     }
     getArticles = async (page) => {
         try {
@@ -27,13 +28,27 @@ class Articles extends Component {
             console.log(err)
         }
     }
+    increment = (e) => {
+        e.preventDefault();
+        this.setState((prevState, props) => ({
+            pageNumber: ++prevState.pageNumber
+        }));
+        this.getArticles(this.state.pageNumber);
+    }
+    decrement = (e) => {
+        e.preventDefault();
+        this.setState((prevState, props) => ({
+            pageNumber: --prevState.pageNumber
+        }));
+        this.getArticles(this.state.pageNumber);
+    }
 
     render() {
         const Posts = this.state.articles.map(articles => {
             return (
-                <TemplateFiles.Consumer>
+                <TemplateFiles.Consumer key={articles.id}>
                     {data => (
-                        <Article {...articles} admin={data.admin} key={articles.id} />
+                        <Article {...articles} admin={data.admin} />
                     )}
                 </TemplateFiles.Consumer>
             );
@@ -42,6 +57,8 @@ class Articles extends Component {
             <TemplateFiles.Consumer>
                 {value => (
                     <ArticleView
+                        paginate={{ increment: this.increment, decrement: this.decrement }}
+                        pageNumber={this.state.pageNumber}
                         header_style="masthead"
                         Posts={Posts} mystyle={{
                             backgroundImage: "url(" + value.siteData.Main.bg + ")"

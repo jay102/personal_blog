@@ -4,15 +4,14 @@ import bodyParser from 'body-parser';
 const db = require('./database/config/config');
 const port = process.env.PORT || 4000;
 
+// body parser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // import routes
 import Admin from './routes/admin'
 import BlogPosts from './routes/blogpost'
 import Tags from './routes/tags'
-
-// body parser
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 
 // static folders
 app.use(express.static('uploads'))
@@ -32,9 +31,9 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 //setup routes
-app.use('/admin', Admin());
-app.use('/posts', BlogPosts());
-app.use('/tags', Tags());
+app.use('/admin', Admin);
+app.use('/posts', BlogPosts);
+app.use('/tags', Tags);
 
 //test db
 db.authenticate()

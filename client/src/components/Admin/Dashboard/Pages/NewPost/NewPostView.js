@@ -8,19 +8,11 @@ import CodeBlock from './codeBlock';
 import Card from '../../../../Widgets/Card/Card';
 import CheckBox from '../../../../Widgets/CheckBox/CheckBox'
 import FeaturedImg from './FeaturedImg'
+import ToolBar from './ToolBar'
 
 const NewPostView = (props) => {
     let { delay } = props.state;
-    const toolbar = [
-        {
-            name: "bold",
-            action: function customFunction(editor) {
-                editor.toggleBold();
-            },
-            className: "fa fa-bold",
-            title: "Bold"
-        }
-    ];
+
     return (
 
         <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-4">
@@ -28,7 +20,7 @@ const NewPostView = (props) => {
                 <div className="row">
                     <div className="col-9">
                         <ResponseChecker data={props.state} />
-                        <Form {...props} delay={delay} />
+                        <Form {...props} delay={delay} toolbar={ToolBar} />
                     </div>
                     <div className="col-3">
                         <aside>
@@ -78,6 +70,9 @@ const Form = (props) => {
                     options={
                         {
                             spellChecker: true,
+                            toolbar: props.toolbar,
+                            imageUploadEndpoint: `${props.backendurl}/posts/images`,
+                            uploadImage: true,
                             autosave: {
                                 enabled: true,
                                 uniqueId: uuid(),
@@ -116,7 +111,7 @@ const Tags = (props) => {
     return (
         <div className="col-lg-6">
             {props.tags.map(item => {
-                return <CheckBox theme="-inline" title={item.tag} handleSelection={props.handleSelection} key={item.id} />
+                return <CheckBox title={item.tag} handleSelection={props.handleSelection} key={item.id} />
             })}
         </div>
     );

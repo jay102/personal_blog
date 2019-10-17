@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import "easymde/dist/easymde.min.css";
-import articlesRepository from '../../../../../services/articlesRepository'
+import articlesRepository from '../../../../../services/articles.service'
 import axios from 'axios'
 import slugify from '@sindresorhus/slugify'
 import moment from 'moment'
@@ -107,7 +107,8 @@ export class NewPost extends Component {
                 handlePostChange={this.handlePostChange}
                 makeRequest={this.makeRequest}
                 handleTagSelection={this.handleTagSelection}
-                setImage={this.setImage} />
+                setImage={this.setImage}
+                backendurl={this.props.backendurl} />
         );
     }
 }

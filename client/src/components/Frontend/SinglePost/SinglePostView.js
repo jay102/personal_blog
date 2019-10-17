@@ -19,7 +19,11 @@ const SinglePostView = (props) => {
 
 }
 const Post = (props) => {
-  const featured_image = `${localStorage.getItem('backend_url')}/articles/imgs/${props.article.featured_img}`
+  let image;
+  const { featured_img } = props.article
+  if (featured_img) {
+    image = `${localStorage.getItem('backend_url')}/articles/imgs/${props.article.featured_img}`
+  }
   return (
     <>
       <div className="container post">
@@ -33,7 +37,7 @@ const Post = (props) => {
             <hr />
 
             {/* <!-- Preview Image --> */}
-            <img className="img-fluid rounded" src={`${featured_image}`} alt="featured" height="500px" width="700px" />
+            <img className="img-fluid rounded" src={`${image}`} alt="featured" height="500px" width="700px" />
             <hr />
             <ReactMarkdown
               source={props.article.body}

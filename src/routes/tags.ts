@@ -18,4 +18,4 @@ const Tags = () => {
   return router;
 }
 
-export default Tags;
+export default Tags();
