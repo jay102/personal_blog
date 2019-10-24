@@ -29,7 +29,7 @@ if (env === "test") {
         }
     }
     );
-} else {
+} else if (env === "production") {
     db = new Sequelize(`${process.env.DATABASE_URL}`, {
         dialect: 'postgres',
 

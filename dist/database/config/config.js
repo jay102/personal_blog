@@ -27,7 +27,7 @@ else if (env === "development") {
         }
     });
 }
-else {
+else if (env === "production") {
     db = new Sequelize(`${process.env.DATABASE_URL}`, {
         dialect: 'postgres',
         pool: {
