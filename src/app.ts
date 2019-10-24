@@ -8,7 +8,7 @@ const path = require('path');
 // body parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, './client/build')));
+app.use(express.static(path.join(__dirname, '/../client/build')));
 
 // import routes
 import Admin from './routes/admin';

@@ -12,7 +12,7 @@ const path = require('path');
 // body parser
 app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: false }));
-app.use(express_1.default.static(path.join(__dirname, './client/build')));
+app.use(express_1.default.static(path.join(__dirname, '/../client/build')));
 // import routes
 const admin_1 = __importDefault(require("./routes/admin"));
 const blogpost_1 = __importDefault(require("./routes/blogpost"));
