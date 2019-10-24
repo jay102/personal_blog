@@ -4,7 +4,7 @@
   "description": "Back-end for my website",
   "main": "app.ts",
   "scripts": {
-    "start": "node dist/app.js",
+    "start": "node src/app.ts",
     "dev": "nodemon src/app.ts",
     "client": "npm start --prefix client",
     "both": "concurrently \"npm run dev\" \"npm run client\"",
