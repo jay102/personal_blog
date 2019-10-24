@@ -26,7 +26,7 @@ class App extends Component {
       siteData: FrontendFiles,
       admin: ""
     }
-    this.backendurl = "http://localhost:4000";
+    this.backendurl = "https://jaycodes-blog.herokuapp.com";
     localStorage.setItem('backend_url', this.backendurl);
   }
   componentDidMount() {
