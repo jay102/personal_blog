@@ -59,7 +59,18 @@ export class NewPost extends Component {
             console.log(err)
         }
     }
-
+    imageUploadFunction = (file, onSuccess, onError) => {
+        const data = new FormData();
+        data.append('image', file)
+        axios.post('/posts/images', data)
+            .then(res => {
+                onSuccess(res.data.data.url)
+            }).catch(err => {
+                if (err.response) {
+                    onError(err.response.data.error)
+                }
+            })
+    };
     setImage = (file) => {
         this.setState({ featured_img: URL.createObjectURL(file), file: file })
     }
@@ -108,7 +119,8 @@ export class NewPost extends Component {
                 makeRequest={this.makeRequest}
                 handleTagSelection={this.handleTagSelection}
                 setImage={this.setImage}
-                backendurl={this.props.backendurl} />
+                backendurl={this.props.backendurl}
+                imageUploadFunction={this.imageUploadFunction} />
         );
     }
 }

@@ -22,3 +22,10 @@
     width:100%;
     padding: 12px;
 }
+/* increase edit modal width */
+@media (min-width: 576px){
+    .modal-dialog {
+        max-width: 1000px;
+        margin: 1.75rem auto;
+    }
+}

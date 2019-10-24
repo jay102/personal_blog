@@ -115,6 +115,18 @@ class AllPosts extends Component {
         })
         console.log(this.state.file)
     }
+    imageUploadFunction = (file, onSuccess, onError) => {
+        const data = new FormData();
+        data.append('image', file)
+        axios.post('/posts/images', data)
+            .then(res => {
+                onSuccess(res.data.data.url)
+            }).catch(err => {
+                if (err.response) {
+                    onError(err.response.data.error)
+                }
+            })
+    };
     toggleEdit = (e, postsEdits) => {
         e.preventDefault();
         this.setState({
@@ -198,7 +210,8 @@ class AllPosts extends Component {
                     state={this.state}
                     setImage={this.setImage}
                     toolbar={Toolbar}
-                    backendurl={this.props.backendurl} />
+                    backendurl={this.props.backendurl}
+                    imageUploadFunction={this.imageUploadFunction} />
             </>
         );
     }

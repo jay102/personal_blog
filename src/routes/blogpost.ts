@@ -1,11 +1,18 @@
 import PostController from '../controllers/postController';
 import BlogPost from '../database/models/Posts'
+import Media from '../database/models/Media';
 const multerSetup = require('../middlewares/multer');
-const multer = require('multer');
-import express from 'express'
+const cloudinary = require('cloudinary');
+import express from 'express';
 
-const { multerInit } = multerSetup(multer);
-let controller = new PostController(BlogPost, multerInit);
+
+const { multerInit } = multerSetup;
+const Models = {
+  BlogPost, Media
+}
+const middlewares = { cloudinary }
+
+let controller = new PostController(Models, middlewares);
 const blogPostRouter = () => {
   const router = express.Router();
   //Create Blogpost
@@ -18,7 +25,8 @@ const blogPostRouter = () => {
 
   // post images for post
   router.route('/images')
-    .post(controller.postImage)
+    .post(multerInit.single('image'), controller.postImage)
+    .delete(controller.deleteImage)
 
   // get limited blogposts for dashboard
   router.route('/limit/:page')

@@ -1,15 +1,14 @@
 import { Request, Response, NextFunction } from 'express';
-const multer = require('multer');
-
-//import BlogPost from '../../database/models/Posts';
 
 
 class postController {
-    upload: any;
-    constructor(private BlogPost: any, private multerInit: any) {
-        this.BlogPost = BlogPost;
-        this.multerInit = multerInit;
-        this.upload = multerInit.single('image');
+    BlogPost: any;
+    Media: any;
+    cloudinary: any;
+    constructor(private Models?: any, private middlewares?: any, ) {
+        const { BlogPost, Media } = Models;
+        const { cloudinary } = middlewares;
+        Object.assign(this, Models, middlewares);
     }
     //new post
     newPost = (req: Request, res: Response, next: NextFunction) => {
@@ -22,8 +21,9 @@ class postController {
         let tags: string = req.body.tags;
         const { file } = (<any>req)
         if (file) {
-            featured_img = file.filename;
+            featured_img = file.url;
         }
+        const outer = this;
         this.BlogPost.create({
             author,
             title,
@@ -34,9 +34,14 @@ class postController {
             featured_img,
         })
             .then((result: any) => {
-                return res.status(201).json({
-                    message: "Successful",
-                    Posts: result
+                outer.Media.create({
+                    url: file.url,
+                    publicId: file.public_id,
+                }).then((result: any) => {
+                    return res.status(201).json({
+                        message: "Successful",
+                        Posts: result
+                    })
                 })
             })
             .catch((err: any) => {
@@ -47,29 +52,37 @@ class postController {
     }
 
     postImage = (req: Request, res: Response, next: NextFunction) => {
-        let image: string | undefined;
-        this.upload(req, res, function (err: any) {
-            //deal with the error(s)   
-            if (err instanceof multer.MulterError) {
-                // A Multer error occurred when uploading.
-                err.message === 'File too Large' ?
-                    res.status(413).json({ "error": 413 }) :
-                    res.status(422).json({ "error": 422 })
-            } else if (err) {
-                // An unknown error occurred when uploading.
-                return res.status(415).json({ "error": 415 })
-            }
+        const { file } = (<any>req)
+        if (file) {
+            this.Media.create({
+                url: file.url,
+                publicId: file.public_id,
+            }).then((result: any) => {
+                return res.status(200).json({ "data": { "url": file.url } })
+            }).catch((err: any) => {
+                console.log(err);
+            })
+        } else {
+            return res.status(400).json({ "error": 400 })
+        }
+    }
+    // delete media
+    deleteImage = (req: Request, res: Response, next: NextFunction) => {
+        const id = req.body.id;
+        const outer = this;
+        this.cloudinary.v2.uploader
+            .destroy(id, (error: any, result: any) => {
+                if (result.result === "ok") {
+                    outer.Media.destroy({
+                        where: { publicId: id }
+                    }).then((result: any) => {
+                        res.status(200).json(result)
+                    })
+                } else {
+                    res.status(200).json(result)
+                }
 
-            const { file } = (<any>req)
-            //  console.log(file)
-            if (file) {
-                image = file.path;
-            }
-            file === undefined ? res.status(400).json({ "error": 400 }) :
-                res.status(200).json({ "data": { "filePath": image } })
-        })
-
-
+            });
     }
     //get all posts
     getAllposts = (req: Request, res: Response, next: NextFunction) => {

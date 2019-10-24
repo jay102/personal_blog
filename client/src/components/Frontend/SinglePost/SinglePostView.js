@@ -22,7 +22,7 @@ const Post = (props) => {
   let image;
   const { featured_img } = props.article
   if (featured_img) {
-    image = `${localStorage.getItem('backend_url')}/articles/imgs/${props.article.featured_img}`
+    image = `${props.article.featured_img}`
   }
   return (
     <>

@@ -37,7 +37,7 @@ class SideBar extends Component {
                 <NavLink onClick={this.logout} className="nav-link" activeStyle={activeLink} to="/admin/login"><span style={iconStyle}><i className="fa fa-step-forward"></i></span>Signout</NavLink>
               </li>
               <li>
-                <NavLink className="nav-link" activeStyle={activeLink} to="/admin/media"><span style={iconStyle}><i className="fas fa-images"></i></span>Media</NavLink>
+                <NavLink className="nav-link" activeStyle={activeLink} to="/admin/dashboard/media"><span style={iconStyle}><i className="fas fa-images"></i></span>Media</NavLink>
               </li>
             </ul>
           </div>

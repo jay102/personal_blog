@@ -1,37 +1,25 @@
 const moment = require('moment');
+const multer = require('multer');
+const cloudinary = require("cloudinary");
+const cloudinaryStorage = require("multer-storage-cloudinary");
+require('dotenv').config()
 
-const setupMulter = (multer: any) => {
-  const storage = multer.diskStorage({
-    destination(req: any, file: any, cb: any) {
-      cb(null, './uploads/articles/imgs');
-    },
-    filename(req: any, file: any, cb: any) {
-      cb(null, `${moment().format('YYYY-MM-DD')}-${file.originalname}`);
-    },
+const setupMulter = () => {
+  cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
   });
 
-  const fileFilter = (req: any, file: any, cb: any) => {
-    if (
-      file.mimetype === 'image/png'
-      || file.mimetype === 'image/jpeg'
-      || file.mimetype === 'image/jpg'
-    ) {
-      cb(null, true);
-    } else {
-      cb(new Error('Unacceptable Image Format'), false);
-    }
-  };
-
-  const multerInit = multer({
-    storage,
-    limits: {
-      fileSize: 1024 * 1024 * 5,
-    },
-    fileFilter,
+  const storage = cloudinaryStorage({
+    cloudinary: cloudinary,
+    folder: "uploads",
+    allowedFormats: ["jpg", "png"],
+    transformation: [{ width: 500, height: 500, crop: "limit" }]
   });
-
+  const multerInit = multer({ storage: storage });
   return {
     multerInit,
   };
 }
-module.exports = setupMulter;
+module.exports = setupMulter();

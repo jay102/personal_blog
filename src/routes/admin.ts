@@ -2,10 +2,9 @@ import express from 'express'
 import AdminController from '../controllers/adminController'
 import Admin from '../database/models/Admin'
 const multerSetup = require('../middlewares/multer');
-const multer = require('multer');
+const { multerInit, dataUri } = multerSetup;
 
 const AdminRoutes = () => {
-    const { multerInit } = multerSetup(multer);
     const router = express.Router();
     const adminController = new AdminController(Admin);
     // find admin

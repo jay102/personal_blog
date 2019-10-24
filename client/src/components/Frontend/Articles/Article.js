@@ -3,15 +3,14 @@ import { Link } from 'react-router-dom';
 
 
 const Article = (props) => {
-  const backend_url = localStorage.getItem('backend_url');
   const { image } = props.admin.admin;
   return (
     <div className="blog-roll_card" key={props.id}>
       <div className="post-preview">
         <Title title={props.title} post_url={`/posts/${props.post_url}`} />
-        <Author author={props.author} time={props.time} image={`${backend_url}/articles/imgs/${image}`} />
+        <Author author={props.author} time={props.time} image={`${image}`} />
         <Subtitle body={props.body} />
-        <ReadMore post_url={props.post_url} id={props.id} />
+        <ReadMore post_url={`/posts/${props.post_url}`} id={props.id} />
       </div>
     </div>
   );
@@ -28,7 +27,7 @@ const Author = (props) => {
   </div>
 }
 // Readmore
-const ReadMore = (props) => <Link to={`/posts/${props.post_url}`}>  <p className="read-more">Read More</p></Link>
+const ReadMore = (props) => <a href={props.post_url}>  <p className="read-more">Read More</p></a>
 
 const escapeChar = (str) => {
   if ((str === null) || (str === ''))

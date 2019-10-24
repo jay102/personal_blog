@@ -54,7 +54,7 @@ const EditPost = (props) => {
                       {
                         spellChecker: true,
                         toolbar: props.toolbar,
-                        imageUploadEndpoint: `${props.backendurl}/posts/images`,
+                        imageUploadFunction: props.imageUploadFunction,
                         uploadImage: true,
                         autosave: {
                           enabled: true,
