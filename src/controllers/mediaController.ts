@@ -51,5 +51,20 @@ class MediaController {
     }
   }
 
+  //count media
+  getMediano = (req: Request, res: Response, next: NextFunction) => {
+    this.Media.count()
+      .then((result: any) => {
+        return res.status(200).json({
+          message: "successful",
+          media: result
+        })
+      })
+      .catch((err: any) => {
+        return res.status(500).json({
+          Error: err
+        })
+      })
+  }
 }
 export default MediaController;

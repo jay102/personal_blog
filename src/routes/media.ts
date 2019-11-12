@@ -18,6 +18,9 @@ const Media = () => {
     .post(multerInit.single('image'), controller.addMedia)
     .delete(controller.deleteMedia)
 
+  // get media count
+  router.route('/media-count')
+    .get(controller.getMediano)
   return router;
 }
 

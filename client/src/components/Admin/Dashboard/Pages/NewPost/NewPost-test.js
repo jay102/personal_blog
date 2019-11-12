@@ -1,1 +1,0 @@
-import { NewPost } from './NewPostContainer'

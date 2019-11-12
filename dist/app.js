@@ -35,12 +35,12 @@ app.use('/admin', admin_1.default);
 app.use('/posts', blogpost_1.default);
 app.use('/tags', tags_1.default);
 app.use('/media', media_1.default);
-// serve static assets if in production
-if (process.env.NODE_ENV !== 'development') {
-    app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-    });
-}
+// // serve static assets if in production
+// if (process.env.NODE_ENV !== 'development') {
+//     app.get('*', (req, res) => {
+//         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+//     });
+// }
 //test db
 db.authenticate()
     .then(() => console.log("Database Connected Successfully"))

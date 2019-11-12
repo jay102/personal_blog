@@ -44,6 +44,21 @@ class MediaController {
                 return res.status(400).json({ "error": 400 });
             }
         };
+        //count media
+        this.getMediano = (req, res, next) => {
+            this.Media.count()
+                .then((result) => {
+                return res.status(200).json({
+                    message: "successful",
+                    media: result
+                });
+            })
+                .catch((err) => {
+                return res.status(500).json({
+                    Error: err
+                });
+            });
+        };
         this.Media = Media;
         const { cloudinary } = middlewares;
         Object.assign(this, middlewares);

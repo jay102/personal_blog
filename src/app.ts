@@ -39,12 +39,12 @@ app.use('/posts', BlogPosts);
 app.use('/tags', Tags);
 app.use('/media', Media);
 
-// serve static assets if in production
-if (process.env.NODE_ENV !== 'development') {
-    app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-    });
-}
+// // serve static assets if in production
+// if (process.env.NODE_ENV !== 'development') {
+//     app.get('*', (req, res) => {
+//         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+//     });
+// }
 
 //test db
 db.authenticate()

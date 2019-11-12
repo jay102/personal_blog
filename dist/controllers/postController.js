@@ -80,11 +80,14 @@ class postController {
         };
         //get all posts
         this.getAllposts = (req, res, next) => {
-            this.BlogPost.findAll()
+            let offset = parseInt(req.params.offset);
+            const pageSize = parseInt(req.params.pageSize);
+            const limit = pageSize;
+            this.BlogPost.findAndCountAll({ limit, offset })
                 .then((result) => {
                 return res.status(201).json({
                     message: "successful",
-                    Posts: result
+                    Posts: result.rows
                 });
             })
                 .catch((err) => {
@@ -110,8 +113,7 @@ class postController {
         };
         //get limited number of posts 
         this.getLimitedPosts = (req, res, next) => {
-            console.log(req.params.page);
-            this.BlogPost.findAll({ limit: 10, offset: req.params.page })
+            this.BlogPost.findAll({ limit: req.params.limit })
                 .then((result) => {
                 return res.status(200).json({
                     message: "successful",

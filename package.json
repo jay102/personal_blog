@@ -8,7 +8,6 @@
     "dev": "nodemon src/app.ts",
     "client": "npm start --prefix client",
     "both": "concurrently \"npm run dev\" \"npm run client\"",
-    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build",
     "build": "tsc -p .",
     "lint": "eslint .",
     "jest": {
