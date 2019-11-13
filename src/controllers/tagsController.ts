@@ -74,7 +74,10 @@ class TagsController {
   }
 
   getArticlesByTag = (req: Request, res: Response, next: NextFunction) => {
-    this.BlogPost.findAll({ where: { tags: { [Op.iLike]: `%${req.params.tag}%` } } })
+    let offset: any = parseInt(req.params.offset);
+    const pageSize: any = parseInt(req.params.pageSize);
+    const limit = pageSize;
+    this.BlogPost.findAll({ where: { tags: { [Op.iLike]: `%${req.params.tag}%` } }, limit, offset })
       .then((response: any) => {
         res.status(201).json({ articles: response })
       })

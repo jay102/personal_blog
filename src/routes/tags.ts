@@ -12,7 +12,7 @@ const Tags = () => {
     .delete(controller.deleteTag)
     .put(controller.editTag)
 
-  router.route('/:tag')
+  router.route('/:tag/:offset/:pageSize')
     .get(controller.getArticlesByTag)
 
   return router;
