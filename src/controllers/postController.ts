@@ -59,7 +59,7 @@ class postController {
                 publicId: file.public_id,
             }).then((result: any) => {
                 return res.status(200).json({ "data": { "url": file.url } })
-            }).catch((err: any) => {
+            }).catch((err: string) => {
                 console.log(err);
             })
         } else {
