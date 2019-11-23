@@ -58,7 +58,7 @@ class postController {
                 url: file.url,
                 publicId: file.public_id,
             }).then((result: any) => {
-                return res.status(200).json({ "data": { "url": file.url } })
+                return res.status(201).json({ "data": { "url": file.url } })
             }).catch((err: string) => {
                 console.log(err);
             })
@@ -91,7 +91,7 @@ class postController {
         const limit = pageSize;
         this.BlogPost.findAndCountAll({ limit, offset })
             .then((result: any) => {
-                return res.status(201).json({
+                return res.status(200).json({
                     message: "successful",
                     Posts: result.rows
                 })
