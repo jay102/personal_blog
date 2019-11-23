@@ -1,8 +1,9 @@
+require('dotenv').config()
 const moment = require('moment');
 const multer = require('multer');
 const cloudinary = require("cloudinary");
 const cloudinaryStorage = require("multer-storage-cloudinary");
-require('dotenv').config()
+
 
 const setupMulter = () => {
   cloudinary.config({
