@@ -1,10 +1,14 @@
 import express from 'express'
-import User from '../database/models/Posts'
+import User from '../database/models/Users';
+import Media from '../database/models/Media';
+const multerSetup = require('../middlewares/multer');
 import usersController from '../controllers/usersControlller';
+
+const { multerInit } = multerSetup;
 
 const Users = () => {
   const router = express.Router();
-  const controller = new usersController(User);
+  const controller = new usersController(User, Media);
 
   router.route('/')
     .post(controller.addUser)
@@ -14,9 +18,8 @@ const Users = () => {
     .put(controller.editUser)
     .delete(controller.deleteUser)
   router.route('/image')
-    .put(controller.uploadUserImage)
+    .put(multerInit.single('image'), controller.uploadUserImage)
 
   return router;
 }
-
 export default Users();

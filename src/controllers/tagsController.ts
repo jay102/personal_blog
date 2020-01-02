@@ -26,7 +26,7 @@ class TagsController {
   getTags = (req: Request, res: Response, next: NextFunction) => {
     this.Tag.findAll()
       .then((response: any) => {
-        res.status(201).json({ tags: response })
+        res.status(200).json({ tags: response })
       })
       .catch((err: string) => {
         res.json({ error: "an error occured" })

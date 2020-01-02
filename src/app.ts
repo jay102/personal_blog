@@ -16,6 +16,7 @@ import Admin from './routes/admin';
 import BlogPosts from './routes/blogpost';
 import Tags from './routes/tags';
 import Media from './routes/media';
+import Users from './routes/users';
 
 // static folders
 app.use(express.static('uploads'))
@@ -40,6 +41,7 @@ app.use('/admin', Admin);
 app.use('/posts', BlogPosts);
 app.use('/tags', Tags);
 app.use('/media', Media);
+app.use('/users', Users)
 
 // // serve static assets if in production
 // if (process.env.NODE_ENV !== 'development') {

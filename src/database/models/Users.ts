@@ -3,6 +3,12 @@ const db = require("../config/config");
 
 const Users = db.define("user", {
     id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    username: {
         type: Sequelize.STRING,
         allowNull: false
     },
@@ -10,5 +16,9 @@ const Users = db.define("user", {
         type: Sequelize.STRING,
         allowNull: false
     },
+    image: {
+        type: Sequelize.STRING,
+        allowNull: true
+    }
 });
 export default Users;
